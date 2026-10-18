@@ -1,0 +1,12 @@
+name: Test
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  conformance:
+    uses: licensebox/protocol/.github/workflows/sdk.yml@0c1451c3295af713a904cf9a835021241f792581
+    with:
+      language: zig
