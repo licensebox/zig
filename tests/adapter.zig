@@ -52,11 +52,17 @@ fn run(a: std.mem.Allocator, r: std.json.Value) !lb.Outcome {
         const name = if (r.object.get("module")) |v| v.string else "core";
         if (eq(op, "heartbeat-after-require")) {
             const required = try client.requireModule("core");
-            switch (required) { .failure => return required, .value => required.deinit(a), }
+            switch (required) {
+                .failure => return required,
+                .value => required.deinit(a),
+            }
         }
         if (eq(op, "heartbeat-repeat")) {
             const first = try client.heartbeat(name);
-            switch (first) { .failure => return first, .value => first.deinit(a), }
+            switch (first) {
+                .failure => return first,
+                .value => first.deinit(a),
+            }
         }
         return client.heartbeat(name);
     }
