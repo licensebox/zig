@@ -119,6 +119,11 @@ pub const Client = struct {
         defer self.allocator.free(args);
         return self.call("require", args);
     }
+    pub fn heartbeat(self: *Client, name: []const u8) !Outcome {
+        const args = try std.json.stringifyAlloc(self.allocator, .{ .module = name }, .{});
+        defer self.allocator.free(args);
+        return self.call("heartbeat", args);
+    }
     pub fn status(self: *Client) !Outcome {
         return self.call("status", "{}");
     }

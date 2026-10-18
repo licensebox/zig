@@ -48,6 +48,18 @@ fn run(a: std.mem.Allocator, r: std.json.Value) !lb.Outcome {
     };
     defer client.destroy();
     if (eq(op, "require")) return client.requireModule(if (r.object.get("module")) |v| v.string else "core");
+    if (eq(op, "heartbeat") or eq(op, "heartbeat-repeat") or eq(op, "heartbeat-after-require")) {
+        const name = if (r.object.get("module")) |v| v.string else "core";
+        if (eq(op, "heartbeat-after-require")) {
+            const required = try client.requireModule("core");
+            switch (required) { .failure => return required, .value => required.deinit(a), }
+        }
+        if (eq(op, "heartbeat-repeat")) {
+            const first = try client.heartbeat(name);
+            switch (first) { .failure => return first, .value => first.deinit(a), }
+        }
+        return client.heartbeat(name);
+    }
     if (eq(op, "repeat")) {
         const first = try client.requireModule("core");
         switch (first) {
