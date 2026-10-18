@@ -7,6 +7,6 @@ permissions:
   contents: read
 jobs:
   conformance:
-    uses: licensebox/protocol/.github/workflows/sdk.yml@0c1451c3295af713a904cf9a835021241f792581
+    uses: licensebox/protocol/.github/workflows/sdk.yml@1bfdfb756c07323a74fa5b5a68c447a1fdb17be0
     with:
       language: zig
