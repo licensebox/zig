@@ -11,7 +11,7 @@ Run `bash ci/test.sh` from this repository after installing the toolchain. `ci/s
 Create a client with JSON options:
 
 ```json
-{"product":"your-product","keys":{"current":"YOUR_ED25519_PUBLIC_KEY"},"version":"1.0","directory":"/private/application/state","server":"https://licensebox.dev","ca_bundle":"/optional/trusted-ca.pem"}
+{"product":"your-product","keys":{"current":"ed25519-mldsa65:YOUR_PUBLIC_KEY"},"version":"1.0","directory":"/private/application/state","server":"https://licensebox.dev","ca_bundle":"/optional/trusted-ca.pem"}
 ```
 
 Only `product` and `keys` are required. Omit optional values to use native defaults. `keys` maps signing-key IDs to unpadded base64url public keys. `ca_bundle` is optional; omit it for the system trust store. Never pass private signing keys. Do not expose trusted clock/binding callbacks as end-user configuration. Embedded NUL bytes in textual arguments fail closed.
