@@ -1,6 +1,6 @@
 # Licensebox for Zig
 
-Linux native application SDK, backed by Licensebox C v0.4.0. Requires Zig 0.14.1. Other operating systems and cross compilation have not been validated. This SDK contains no server/admin credentials or administration API.
+Linux native application SDK, backed by Licensebox C v0.5.0. Requires Zig 0.14.1. Other operating systems and cross compilation have not been validated. This SDK contains no server/admin credentials or administration API.
 
 Install the native library using `bash scripts/install-native.sh /your/prefix`, or build/install the pinned C SDK yourself. Set `LICENSEBOX_LIB_DIR=/your/prefix/lib` for building and `LD_LIBRARY_PATH=/your/prefix/lib` for running. Headers are expected in `/your/prefix/include`. `LICENSEBOX_LIBRARY` is supplied by CI for consistency; this binding links `liblicensebox.so` through the Linux loader and uses `LICENSEBOX_LIB_DIR`/`LD_LIBRARY_PATH`. Native dependencies are OpenSSL and libcurl. HTTPS verification stays enabled.
 

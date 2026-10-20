@@ -1,6 +1,6 @@
 .{
     .name = .licensebox,
-    .version = "0.2.0",
+    .version = "0.3.0",
     .fingerprint = 0x28e71d41856a9239,
     .minimum_zig_version = "0.14.1",
     .paths = .{ "build.zig", "build.zig.zon", "src", "README.md", "LICENSE" },
