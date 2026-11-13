@@ -149,6 +149,25 @@ pub const Client = struct {
     pub fn accessLink(self: *Client) !Outcome {
         return self.call("access-link", "{}");
     }
+    /// Enrols this machine as a service account with a one-time token; the
+    /// options JSON may instead carry enrol_token (else LICENSEBOX_ENROL_TOKEN).
+    pub fn enrol(self: *Client, token: []const u8) !Outcome {
+        const args = try std.json.stringifyAlloc(self.allocator, .{ .token = token }, .{});
+        defer self.allocator.free(args);
+        return self.call("enrol", args);
+    }
+    /// Checks a floating copy of the module out; requireModule does so by itself.
+    pub fn checkout(self: *Client, name: []const u8) !Outcome {
+        const args = try std.json.stringifyAlloc(self.allocator, .{ .module = name }, .{});
+        defer self.allocator.free(args);
+        return self.call("checkout", args);
+    }
+    /// Returns floating copies of the modules, or every copy with none named.
+    pub fn checkin(self: *Client, names: []const []const u8) !Outcome {
+        const args = try std.json.stringifyAlloc(self.allocator, .{ .modules = names }, .{});
+        defer self.allocator.free(args);
+        return self.call("checkin", args);
+    }
     pub fn recordUsage(self: *Client, command: []const u8, success: bool, elapsed: f64) !Outcome {
         const args = try std.json.stringifyAlloc(self.allocator, .{ .command = command, .success = success, .elapsed = elapsed }, .{});
         defer self.allocator.free(args);

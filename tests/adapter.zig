@@ -34,7 +34,7 @@ fn run(a: std.mem.Allocator, r: std.json.Value) !lb.Outcome {
     if (eq(op, "verify")) return lb.verifyLease(a, field(r, "token"), product, keys, now);
     var options = std.json.ObjectMap.init(a);
     defer options.deinit();
-    for ([_][]const u8{ "product", "keys", "server", "directory", "ca_bundle" }) |key| {
+    for ([_][]const u8{ "product", "keys", "server", "directory", "ca_bundle", "enrol_token" }) |key| {
         if (r.object.get(key)) |v| try options.put(key, v);
     }
     try options.put("version", .{ .string = "conformance" });
@@ -75,6 +75,9 @@ fn run(a: std.mem.Allocator, r: std.json.Value) !lb.Outcome {
         return client.requireModule("core");
     }
     if (eq(op, "sign_in")) return client.signIn(3);
+    if (eq(op, "enrol")) return client.enrol(field(r, "token"));
+    if (eq(op, "checkout")) return client.checkout(field(r, "module"));
+    if (eq(op, "checkin")) return client.checkin(&.{field(r, "module")});
     if (eq(op, "request")) return client.requestAccess(&.{"export"}, "café – test");
     if (eq(op, "record")) {
         const first = try client.recordUsage("export", true, 0.125);
